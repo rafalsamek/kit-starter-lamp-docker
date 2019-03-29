@@ -1,0 +1,49 @@
+version: '3.4'
+
+services:
+    php-apache:
+      container_name: kit-starter-lamp-docker_php-apache
+      ports:
+        - 80:80
+      environment:
+        - APACHE_DOCUMENT_ROOT=/var/www/html
+        - maildev_host=kit-starter-lamp-docker_maildev
+      build:
+        context: .docker/php-apache
+      volumes:
+        - .:/var/www/html
+        - ./.docker/config/vhost.conf:/etc/apache2/sites-available/000-default.conf
+      depends_on:
+        - maildev
+        - mysql
+
+    mysql:
+      image: mysql
+      command: "--default-authentication-plugin=mysql_native_password --innodb-use-native-aio=0"
+      container_name: kit-starter-lamp-docker_mysql
+      volumes:
+        - .docker/data/db:/var/lib/mysql
+      ports:
+        - 3306:3306
+      environment:
+        MYSQL_ROOT_PASSWORD: root
+        MYSQL_DATABASE: kit-starter
+        MYSQL_USER: kit-starter
+        MYSQL_PASSWORD: kit-starter
+
+    phpmyadmin:
+      image: phpmyadmin/phpmyadmin
+      container_name: kit-starter-lamp-docker_phpmyadmin
+      environment:
+        PMA_HOST: mysql
+        PMA_PORT: 3306
+      ports:
+        - 8080:80
+      links:
+        - mysql
+
+    maildev:
+      image: djfarrelly/maildev
+      container_name: kit-starter-lamp-docker_maildev
+      ports:
+        - 8001:80
