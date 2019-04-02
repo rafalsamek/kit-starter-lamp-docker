@@ -1,5 +1,6 @@
  # kit-starter-lamp-docker
- 
+ LAMP on Docker starter application
+
  ## In the CLI
  ```
  docker-machine start default
