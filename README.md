@@ -8,6 +8,7 @@
  ```
  ## In the Browser
  Hello World! php script:
+ 
  http://192.168.99.100
  
  MySQL:
@@ -19,9 +20,11 @@
  ```
  
  PhpMyAdmin:
+ 
  http://192.168.99.100:8080
  
  MailDev:
+ 
  http://192.168.99.100:8001
  
  
